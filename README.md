@@ -1,3 +1,10 @@
+# Fork note
+
+This is a fork of doriordan/skuber maintained by Domino Data Lab. The default branch here is ddl-master that includes
+some changes for our own uses of the library. E.g. plugins to support publishing to our internal repo while we wait on
+the upstream to issue new releases. We will eagerly merge our feature branches into this branch while they are pending
+review at the upstream project.
+
 # Skuber
 
 Skuber is a Scala client library for [Kubernetes](http://kubernetes.io). It provides a fully featured, high-level and strongly typed Scala API for managing Kubernetes cluster resources (such as Pods, Services, Deployments, ReplicaSets, Ingresses  etc.) via the Kubernetes REST API server
