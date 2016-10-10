@@ -1,3 +1,4 @@
+import com.amazonaws.services.s3.model.Region
 
 resolvers += "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases/"
 
@@ -20,15 +21,18 @@ scalacOptions in Test ++= Seq("-Yrangepos")
 lazy val commonSettings = Seq(
   organization := "io.doriordan",
   scalaVersion := "2.11.8",
-  licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html")),
-  publishMavenStyle := false,
-  bintrayRepository := "skuber"
+  licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 )
 
 lazy val skuberSettings = Seq(
   name := "skuber",
   libraryDependencies ++= Seq(playws,playIterateesExtra,snakeYaml,commonsIO,scalaCheck % Test,specs2 % Test).
-				map(_.exclude("commons-logging","commons-logging"))
+				map(_.exclude("commons-logging","commons-logging")),
+  s3region := Region.US_West_2,
+  publishTo := {
+    val suffix = if (isSnapshot.value) "snapshots" else "releases"
+    Some(s3resolver.value("Domino "+suffix+" S3 bucket", s3(s"domino-maven-repo/$suffix")) withMavenPatterns)
+  }
 )
 
 lazy val examplesSettings = Seq(
